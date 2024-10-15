@@ -17,3 +17,42 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+# test
+# ファイルの削除
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: '/test/pass/'
+    Contents: 'myFileShare'
+
+# コマンドライン
+- task: CmdLine@2
+  inputs:
+    script: 'echo test'
+
+# バッチスクリプト
+- task: BatchScript@1
+  inputs:
+    filename: '/test/pass/'
+
+# MSBuild
+- task: MSBuild@1
+  inputs:
+    solution: 'test'
+
+# Visual Studioのビルド
+- task: VSBuild@1
+  inputs:
+    solution: '/test/pass/'
+
+# ソースのインデックスおよびシンボルの発行
+- task: PublishSymbols@2
+  inputs:
+    SearchPattern: '**/bin/**/*.pdb'
+    SymbolServerType: ''
+
+# ファイルのコピー
+- task: CopyFiles@2
+  inputs:
+    Contents: '/test/pass/'
+    TargetFolder: '$(build.artifactstagingdirectory)'
